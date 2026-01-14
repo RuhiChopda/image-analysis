@@ -79,22 +79,11 @@ class FAQItem(BaseModel):
 
 # Helper functions
 async def generate_embeddings(texts: List[str]) -> List[List[float]]:
-    """Generate embeddings using OpenAI via emergentintegrations"""
+    """Generate embeddings using local sentence-transformers model"""
     try:
-        from openai import AsyncOpenAI
-        openai_client = AsyncOpenAI(
-            api_key=LLM_API_KEY,
-            base_url="https://api.emergent.ml/v1"
-        )
-        
-        embeddings = []
-        for text in texts:
-            response = await openai_client.embeddings.create(
-                model="text-embedding-3-small",
-                input=text
-            )
-            embeddings.append(response.data[0].embedding)
-        return embeddings
+        # Use local model to avoid network issues
+        embeddings = embedding_model.encode(texts, convert_to_numpy=True)
+        return embeddings.tolist()
     except Exception as e:
         logging.error(f"Error generating embeddings: {e}")
         raise
