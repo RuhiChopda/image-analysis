@@ -81,10 +81,12 @@
 ### AI & LLM Services
 
 - **LLM Model:** OpenAI GPT-4o (via Emergent Universal Key)
-- **Embeddings:** OpenAI text-embedding-3-small
+- **Embeddings:** sentence-transformers (all-MiniLM-L6-v2) - Local model for reliable embedding generation
 - **Vector Database:** ChromaDB (local persistent storage)
 - **RAG Framework:** LangChain Text Splitters
 - **PDF Processing:** PyPDF
+
+**Note:** Originally planned to use OpenAI text-embedding-3-small via Emergent API, but due to network constraints in the Kubernetes environment (DNS resolution issues with api.emergent.ml), implemented local sentence-transformers model as a more reliable alternative for embedding generation.
 
 ### Backend Stack
 
