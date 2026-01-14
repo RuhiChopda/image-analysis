@@ -19,6 +19,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 import chromadb
 from chromadb.config import Settings
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+from sentence_transformers import SentenceTransformer
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -37,6 +38,9 @@ collection = chroma_client.get_or_create_collection(
     name="student_documents",
     metadata={"hnsw:space": "cosine"}
 )
+
+# Local embedding model (fallback due to network constraints)
+embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # LLM setup
 LLM_API_KEY = os.environ.get('EMERGENT_LLM_KEY')
